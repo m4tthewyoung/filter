@@ -1,0 +1,39 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/polymer-ui-card/polymer-ui-card.html">
+
+<polymer-element name="filter-card" extends="polymer-ui-card"
+	attributes="progress">
+	<template>
+		<style>
+		:host {
+		  /* transition */
+		  -webkit-transition: opacity 0.30s, transform 0.30s ease-out;
+		  transition: opacity 0.30s, transform 0.30s ease-out;
+		}
+		</style>
+		<shadow></shadow>
+	</template>
+	<script>
+	Polymer({
+		progress: 0.0,
+		fired: false,
+		animate: function(x) {
+			this.progress = Math.min((Math.abs(x) + 300) / 500, 1)
+			this.super([x]);
+		},
+		transitionEnd: function(e) {
+			if (e.propertyName == 'transform') {
+				this.super();
+			}
+		},
+		reset: function() {
+			this.animate(0);
+			this.fired = false;
+			this.progress = 0.0;
+			this.away = false;
+			var s = this.style;
+			s.webkitTransform = s.mozTransform = s.msTransform = s.transform = '';
+		}
+	});
+	</script>
+</polymer-element>
